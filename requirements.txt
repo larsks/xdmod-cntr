@@ -1,0 +1,11 @@
+cryptography
+keystoneauth
+mysql-connector-python==8.0.29
+openshift-client>=1.0
+pexpect
+python-cinderclient
+python-keystoneclient
+python-novaclient
+python-openstacksdk
+PyYAML
+requests>=2.18.4
