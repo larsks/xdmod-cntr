@@ -1,0 +1,42 @@
+From 0f032d224285f6c2ecb97a2c9fee2347ea9c674f Mon Sep 17 00:00:00 2001
+From: Lars Kellogg-Stedman <lars@oddbit.com>
+Date: Sat, 18 Mar 2023 17:27:40 -0400
+Subject: [PATCH] Allow insecure sessions
+
+Allows phpssid to be set even if it is not an https connection.
+
+Changes originally from cci-moc/xdmod-cntr#39
+---
+ libraries/rest.php     | 2 +-
+ libraries/security.php | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libraries/rest.php b/libraries/rest.php
+index 0754b1aa..f5820574 100644
+--- a/libraries/rest.php
++++ b/libraries/rest.php
+@@ -29,7 +29,7 @@ function getToken()
+ function setCookies()
+ {
+     // Obtain and set a cookie for the user's REST token.
+-    setcookie('xdmod_token', getToken(), 0, '/', '', true, true);
++    setcookie('xdmod_token', getToken(), 0, '/', '', false, false);
+ }
+ 
+ /**
+diff --git a/libraries/security.php b/libraries/security.php
+index a33f88f9..b75bad85 100644
+--- a/libraries/security.php
++++ b/libraries/security.php
+@@ -16,7 +16,7 @@ function start_session()
+         $cParams["lifetime"],
+         $cParams["path"],
+         $cParams['domain'],
+-        true
++        false
+     );
+     @session_start();
+ }
+-- 
+2.39.2
+

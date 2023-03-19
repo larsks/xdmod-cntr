@@ -9,6 +9,7 @@ RUN yum makecache && \
     && \
     yum -y install \
         git \
+	patch \
         postfix \
         rh-python38 \
         rh-python38-python-cryptography \
@@ -96,9 +97,11 @@ RUN curl -O https://mirror.openshift.com/pub/openshift-v4/$(uname -m)/clients/oc
 COPY ./xdmod-openshift-reporting.sh /usr/bin/xdmod-openshift-reporting.sh
 RUN chmod g+rwx /usr/bin/xdmod-openshift-reporting.sh
 
-COPY ./assets/allow_insecure_tokens.py /root
-RUN scl enable rh-python38 'python3 /root/allow_insecure_tokens.py' \
-    && rm /root/allow_insecure_tokens.py
+COPY ./patches/* /usr/share/xdmod/patches/
+RUN cd /usr/share/xdmod && \
+	for patch in patches/*; do \
+		patch -p1 < $patch; \
+	done
 
 EXPOSE 8080
 
