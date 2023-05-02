@@ -1,3 +1,4 @@
+import os
 import mysql.connector
 
 
@@ -8,7 +9,7 @@ def exec_fetchone(cursor, sql_stmt, params=None):
     return result[0]
 
 
-def exec_fetchall(cursor, sql_stmt, params):
+def exec_fetchall(cursor, sql_stmt, params=None):
     """executes the sql statmement and fetches all in a list"""
     cursor.execute(sql_stmt, params)
     return cursor.fetchall()
